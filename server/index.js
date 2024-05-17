@@ -1,7 +1,25 @@
 const express = require('express');
 const app = express();
+const dataFile = './data.json';
+const data = require(dataFile);
+const fsp = require('fs/promises');
 
 app.use(express.json());
+
+const getemployees = function(){
+
+}
+
+const storeKey = function(data){
+    console.log(data);
+
+    fsp.writeFile(dataFile,JSON.stringify(data, null, 2)).then(function(response){
+        console.log(response);
+      })
+      .catch(function(error) {
+      console.log(`write error: ${error.message}`);
+    });
+}
 
 app.post('/', (req, res) => {
   // get request values inside req.body
@@ -21,8 +39,10 @@ app.post('/api/sandbox/create', (req, res) => {
         body: JSON.stringify(req.body), // body data type must match "Content-Type" header
       }).then(function(response){
         return response.json();
-      }).then(function(data){
-        res.send(data);
+      }).then(function(d){
+        
+        storeKey(d);
+        res.send(d);
       })
       .catch(function(error) {
       console.log(`Download error: ${error.message}`);
@@ -35,4 +55,4 @@ app.get('/', (req, res) => {
 
 app.listen(5155, () => {
     console.log('server listening on port 5155');
-})
+});
