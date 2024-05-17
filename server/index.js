@@ -1,13 +1,41 @@
 const express = require('express');
 const app = express();
 const dataFile = './data.json';
-const data = require(dataFile);
+//const data = require(dataFile);
 const fsp = require('fs/promises');
 
 app.use(express.json());
 
 const getemployees = function(){
 
+}
+
+const getCompanyData =function(){
+    let data = {};
+
+    fsp.readFile(dataFile)
+    .then(function (result) {
+        data=result;
+        console.log(data);
+    })
+    .catch(function (error) {
+        console.log(error);
+    })
+    /*
+    fetch("https://sandbox.tryfinch.com/api/sandbox/create", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(req.body), // body data type must match "Content-Type" header
+      }).then(function(response){
+        return response.json();
+      }).then(function(d){
+        
+        storeKey(d);
+        res.send(d);
+      })
+      .catch(function(error) {
+      console.log(`Download error: ${error.message}`);
+    });*/
 }
 
 const storeKey = function(data){
@@ -42,6 +70,8 @@ app.post('/api/sandbox/create', (req, res) => {
       }).then(function(d){
         
         storeKey(d);
+        
+        
         res.send(d);
       })
       .catch(function(error) {
