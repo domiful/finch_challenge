@@ -1,5 +1,93 @@
 import React, {useState, useEffect} from 'react';
-import { Button, Spin, Dropdown, Menu } from 'antd';
+import { Button, Spin, Menu, Flex, Layout, Card, Table, Badge } from 'antd';
+const { Header, Sider, Content } = Layout;
+
+const headerStyle = {
+  textAlign: 'center',
+  color: '#fff',
+  height: 64,
+  paddingInline: 48,
+  lineHeight: '64px',
+  backgroundColor: '#4096ff',
+};
+const contentStyle = {
+  minHeight: 120,
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#0958d9',
+};
+const siderStyle = {
+  lineHeight: '120px',
+  color: '#fff',
+  backgroundColor: '#1677ff',
+};
+const layoutStyle = {
+  borderRadius: 8,
+  overflow: 'hidden',
+  width: '90%',
+  maxWidth: 'calc(100% - 8px)',
+};
+
+const columns = [
+  {
+    title: 'First Name',
+    dataIndex: 'first_name',
+    key: 'fname',
+  },
+  {
+    title: 'Middle Name',
+    dataIndex: 'middle_name',
+    key: 'mname',
+  },
+  {
+    title: 'Last Name',
+    dataIndex: 'last_name',
+    key: 'lname',
+  },
+  {
+    title: 'Manager',
+    dataIndex: 'manager',
+    key: 'manager',
+    render: (text, record) => {
+      if (record.manager.id) {
+        return (
+          <a onClick={()=>{openEmployeeModal(record.manager.id)}}>Manager</a>
+  
+        );
+      }
+      
+    },
+
+  },
+  {
+    title: 'Department',
+    dataIndex: 'department',
+    key: 'department',
+    render: (text, record) => (
+        <span>{record.department.name}</span>
+    ),
+  },
+  {
+    title: 'Active',
+    dataIndex: 'is_active',
+    key: 'active',
+    render: (text) => {
+        let color = 'error';
+        if (text) {
+          color = 'success';
+        }
+        return (
+          <Badge status={color} text={text} />
+
+        );
+      }, 
+  },
+];
+
+const openEmployeeModal = (id) =>{
+  console.log(id);
+
+}
 
 const providers_list = [
   {label: 'Select Provider', key: '1'},
@@ -39,6 +127,8 @@ const App = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [compName, setCompName] = useState("");
 
   
   const onClick = (e) => {
@@ -55,43 +145,57 @@ const App = () => {
     }).then(function(response){
       return response.json();
     }).then(function(data){
-      console.log(data);
+      //console.log(data.legal_name);
+      updateForms(data);
     })
     .catch(function(error) {
-    console.log(`Download error: ${error.message}`);
-  });
-    /*fetch("/api/sandbox/create", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          "provider_id": e.key,
-          "products": ["company", "directory", "individual", "employment"],
-          "employee_size": 10
-        }), // body data type must match "Content-Type" header
-      }).then(function(response){
-        return response.json();
-      }).then(function(data){
-        console.log(data);
-      })
-      .catch(function(error) {
       console.log(`Download error: ${error.message}`);
     });
-    */
+  }
 
+  const updateForms = (data) =>{
+    setData(data);
+    setCompName(data.comp.legal_name);
+    setEmployees(data.dir.individuals);
   }
   
 
   return (
     <div className='App'>
-       <Menu
-        onClick={onClick}
-        style={{
-          width: 180,
-        }}
-        defaultSelectedKeys={['1']}
-        mode="inline"
-        items={providers_list}
-      />
+       
+      <Layout style={layoutStyle}>
+        <Sider width="20%" style={siderStyle}>
+          <Menu
+            onClick={onClick}
+            defaultSelectedKeys={['1']}
+            mode="inline"
+            items={providers_list}
+          />
+        </Sider>
+        <Layout>
+          <Header style={headerStyle}>{compName}</Header>
+          <Content width="70%" style={contentStyle}>
+            <Card
+              title="Information"
+              style={{
+                width: '100%',
+              }}
+            >
+              {JSON.stringify(data.comp,null,2)}
+            </Card>
+            <Card
+              title="Directory"
+              style={{
+                width: '100%',
+              }}
+            >
+
+            <Table dataSource={employees} columns={columns} />
+
+            </Card>
+          </Content>
+        </Layout>
+    </Layout>
     </div>
 );
   /*if (loading) {
