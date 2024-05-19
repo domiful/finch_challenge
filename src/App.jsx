@@ -1,9 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import { Button, Spin, Menu, Flex, Layout, Card, Table, Badge } from 'antd';
+import { Button, Spin, Menu, Flex, Layout, Card, Table, Badge, Drawer, Space } from 'antd';
+const { Column } = Table;
+
+//import style from './style.module.css';
 const { Header, Sider, Content } = Layout;
 
 const headerStyle = {
   textAlign: 'center',
+  fontSize:'18px',
+  fontWeight: '600',
   color: '#fff',
   height: 64,
   paddingInline: 48,
@@ -27,67 +32,6 @@ const layoutStyle = {
   width: '90%',
   maxWidth: 'calc(100% - 8px)',
 };
-
-const columns = [
-  {
-    title: 'First Name',
-    dataIndex: 'first_name',
-    key: 'fname',
-  },
-  {
-    title: 'Middle Name',
-    dataIndex: 'middle_name',
-    key: 'mname',
-  },
-  {
-    title: 'Last Name',
-    dataIndex: 'last_name',
-    key: 'lname',
-  },
-  {
-    title: 'Manager',
-    dataIndex: 'manager',
-    key: 'manager',
-    render: (text, record) => {
-      if (record.manager.id) {
-        return (
-          <a onClick={()=>{openEmployeeModal(record.manager.id)}}>Manager</a>
-  
-        );
-      }
-      
-    },
-
-  },
-  {
-    title: 'Department',
-    dataIndex: 'department',
-    key: 'department',
-    render: (text, record) => (
-        <span>{record.department.name}</span>
-    ),
-  },
-  {
-    title: 'Active',
-    dataIndex: 'is_active',
-    key: 'active',
-    render: (text) => {
-        let color = 'error';
-        if (text) {
-          color = 'success';
-        }
-        return (
-          <Badge status={color} text={text} />
-
-        );
-      }, 
-  },
-];
-
-const openEmployeeModal = (id) =>{
-  console.log(id);
-
-}
 
 const providers_list = [
   {label: 'Select Provider', key: '1'},
@@ -126,12 +70,17 @@ const providers_list = [
 const App = () => {
 
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+  const [compData, setCompData] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [compName, setCompName] = useState("");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [individual, setIndividual] = useState([]);
 
+  const onClose = () => {
+    setDrawerOpen(false);
+  };
   
-  const onClick = (e) => {
+  const onSelectProvider = (e) => {
     console.log('click ', e);
 
     fetch("/api/sandbox/create", {
@@ -153,10 +102,34 @@ const App = () => {
     });
   }
 
+  const getEmployeeData = (eid) => {
+    fetch("/api/employer/individual", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        "individual_id":eid,
+      }), // body data type must match "Content-Type" header
+    }).then(function(response){
+      return response.json();
+    }).then(function(data){
+      console.log(data);
+      setIndividual(data);
+      //updateForms(data);
+    })
+    .catch(function(error) {
+      console.log(`Download error: ${error.message}`);
+    });
+  }
+
   const updateForms = (data) =>{
-    setData(data);
-    setCompName(data.comp.legal_name);
-    setEmployees(data.dir.individuals);
+    setCompData(data);
+    setCompName(compData.comp.legal_name);
+    setEmployees(compData.dir.individuals);
+  }
+  
+  const openEmployeeDrawer = (id) => {
+    getEmployeeData(id);
+    setDrawerOpen(true);
   }
   
 
@@ -166,7 +139,7 @@ const App = () => {
       <Layout style={layoutStyle}>
         <Sider width="20%" style={siderStyle}>
           <Menu
-            onClick={onClick}
+            onClick={onSelectProvider}
             defaultSelectedKeys={['1']}
             mode="inline"
             items={providers_list}
@@ -175,13 +148,21 @@ const App = () => {
         <Layout>
           <Header style={headerStyle}>{compName}</Header>
           <Content width="70%" style={contentStyle}>
+          <Space
+            direction="vertical"
+            size="middle"
+            style={{
+              display: 'flex',
+              padding: '1em'
+            }}
+          >
             <Card
               title="Information"
               style={{
                 width: '100%',
               }}
             >
-              {JSON.stringify(data.comp,null,2)}
+              {JSON.stringify(compData.comp,null,2)}
             </Card>
             <Card
               title="Directory"
@@ -190,10 +171,91 @@ const App = () => {
               }}
             >
 
-            <Table dataSource={employees} columns={columns} />
-
+            <Table dataSource={employees}>
+              <Column title="First Name" dataIndex="first_name" key="fname" />
+              <Column title="Middle Name" dataIndex="middle_name" key="mname" />
+              <Column title="Last Name" dataIndex="last_name" key="lname" />
+              <Column
+                title="Manager"
+                dataIndex="manager"
+                key="manager"
+                render={(text, record) => {
+                  if (record.manager.id) {
+                    return (
+                      <a onClick={()=>{openEmployeeDrawer(record.manager.id)}}>Manager</a>
+              
+                    );
+                  }
+                  
+                }}
+              />
+              <Column
+                title="Department"
+                dataIndex="department"
+                key="department"
+                render={(text, record) => (
+                  <span>{record.department.name}</span>
+              )}
+              />
+              <Column
+                title="Active"
+                dataIndex="is_active"
+                key="is_active"
+                render={(text) => {
+                  let color = 'error';
+                  if (text) {
+                    color = 'success';
+                  }
+                  return (
+                    <Badge status={color} text={text} />
+          
+                  );
+                }}
+              />
+              <Column
+                title=""
+                dataIndex="details"
+                key="details"
+                render={(text, record) => (
+                  <a onClick={()=>{openEmployeeDrawer(record.id)}}>Details</a>
+                )}
+              />
+            </Table>
             </Card>
+            </Space>
           </Content>
+          <Drawer
+            title={'Employee'}
+            placement="right"
+            size={'large'}
+            onClose={onClose}
+            open={drawerOpen}
+            extra={
+              <Space>
+                <Button onClick={onClose}>Close</Button>
+                <Button type="primary" onClick={onClose}>
+                  OK
+                </Button>
+              </Space>
+            }
+          >
+            <Card
+              title="Information"
+              style={{
+                width: '100%',
+              }}
+            >
+              {JSON.stringify(individual.ind,null,2)}
+            </Card>
+            <Card
+              title="Employment Data"
+              style={{
+                width: '100%',
+              }}
+            >
+              {JSON.stringify(individual.emp,null,2)}
+            </Card>
+          </Drawer>
         </Layout>
     </Layout>
     </div>

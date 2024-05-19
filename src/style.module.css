@@ -1,0 +1,24 @@
+.headerStyle {
+    text-align: center;
+    color: '#fff';
+    height: 64px;
+    line-height: 64px;
+    background-color: '#4096ff';
+  }
+  .contentStyle {
+    min-height: 120px;
+    line-height:  120px;
+    color: '#fff';
+    background-color: '#0958d9';
+  }
+  .siderStyle {
+    line-height: 120px;
+    color: '#fff';
+    background-color: '#1677ff';
+  }
+  .layoutStyle {
+    border-radius: 8;
+    overflow: hidden;
+    width: 90%;
+    max-width: 100%;
+  }
