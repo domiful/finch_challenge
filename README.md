@@ -1,9 +1,9 @@
 # Finch Challenge
 This is a react application with an express server that handles requests to the Finch API.
 
-It is based on the default template project  [nano-react-app](https://github.com/nano-react-app/nano-react-app).
-I am using [ant design](https://github.com/ant-design/ant-design) for the theme.
-I am using [rjsf](https://rjsf-team.github.io/react-jsonschema-form/docs/) with an ant theme to populate the forms.
+- It is based on the default template project  [nano-react-app](https://github.com/nano-react-app/nano-react-app).
+- I am using [ant design](https://github.com/ant-design/ant-design) for the theme.
+- I am using [rjsf](https://rjsf-team.github.io/react-jsonschema-form/docs/) with an ant theme to populate the forms.
 
 # Requirements
 
@@ -31,7 +31,4 @@ In a new terminal window
 
 You can open the app at `localhost:5173`
 
-
-
-
-Then follow the normal procedure in GitHub Pages and select the `gh-pages` branch.
+have fun
