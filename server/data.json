@@ -1,9 +1,9 @@
 {
-  "payroll_provider_id": "quickbooks",
-  "company_id": "9ff6e578-ca61-4785-8f43-92cde12bb529",
-  "access_token": "sandbox-token-accdab31-a539-4ffb-8224-c9bf0eaf60c3",
+  "payroll_provider_id": "personio",
+  "company_id": "1549a16b-01d2-4de4-bb77-bf81fd848084",
+  "access_token": "sandbox-token-1d3941fb-0824-4f9a-9cc3-651a241d533c",
   "sandbox_time": {
-    "unix": 1716141175177,
-    "calendar": "Sun May 19 2024 17:52:55 GMT+0000"
+    "unix": 1716175337307,
+    "calendar": "Mon May 20 2024 03:22:17 GMT+0000"
   }
 }

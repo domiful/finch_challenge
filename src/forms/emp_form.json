@@ -1,0 +1,129 @@
+{
+    "type":"object",
+    "properties":{
+        "responses":{
+            "type": "array",
+            "title": "Accounts",
+            "items": {
+                "title":"",
+                "type":"object",
+                "properties": {
+                  "body": {
+                    "title": "",
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                          "title": "Title",
+                          "type": "string"
+                        },
+                        "manager": {
+                            "type": "object",
+                            "title": "Manager",
+                            "properties": {
+                                "id": {
+                                    "title": "",
+                                    "type": "string"
+                                    }
+                            }
+                          },
+                          "employment": {
+                            "type": "object",
+                            "title": "Employment Type",
+                            "properties": {
+                                "type": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "subtype": {
+                                    "title": "",
+                                    "type": "string"
+                                    }
+                            }
+                          },
+                          
+                          "department": {
+                            "type": "object",
+                            "title": "Department",
+                            "properties": {
+                                "name": {
+                                    "title": "",
+                                    "type": "string"
+                                    }
+                            }
+                          },
+                        "start_date": {
+                            "title": "Start Date",
+                            "type": "string"
+                        },
+                        "end_date": {
+                            "title": "End Date",
+                            "type": "string"
+                        },
+                        "is_active": {
+                            "title": "Active",
+                            "type": "string"
+                        },
+                        "class_code": {
+                            "title": "Class Code",
+                            "type": "string"
+                        },
+                        "location": {
+                            "type": "object",
+                            "title": "Location",
+                            "properties": {
+                                "line1": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "line2": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "city": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "state": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "postal_code": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "country": {
+                                    "title": "",
+                                    "type": "string"
+                                    }
+                            }
+                          },
+                          "income": {
+                            "type": "object",
+                            "title": "Income",
+                            "properties": {
+                                "unit": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "amount": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "currency": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "effective_date": {
+                                    "title": "",
+                                    "type": "string"
+                                    }
+                            }
+                          }
+                    }
+                }
+              }
+          }
+        }
+    }
+
+}

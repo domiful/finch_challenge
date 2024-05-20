@@ -1,0 +1,99 @@
+{
+    "type": "object",
+    "properties": {
+      "legal_name": {
+        "type": "string",
+        "title": "Company name"
+      },
+      "id": {
+        "type": "string",
+        "title": "ID"
+      },
+      "ein": {
+        "type": "string",
+        "title": "EIN"
+      },
+      "primary_email": {
+        "type": "string",
+        "title": "Email"
+      },
+      "primary_phone_number": {
+        "type": "string",
+        "title": "Telephone"
+      },
+      "departments": {
+        "type": "array",
+        "title": "Departments",
+        "items": {
+            "title":"",
+            "properties": {
+              "name": {
+                "title": "",
+                "type": "string"
+              }
+            }
+          }
+      },
+      "locations": {
+        "type": "array",
+        "title": "Locations",
+        "items": {
+            "properties": {
+              "line1": {
+                "title": "",
+                "type": "string"
+              },
+              "line2": {
+                "title": "",
+                "type": "string"
+              },
+              "city": {
+                "title": "",
+                "type": "string"
+              },
+              "state": {
+                "title": "",
+                "type": "string"
+              },
+              "postal_code": {
+                "title": "",
+                "type": "string"
+              },
+              "country": {
+                "title": "",
+                "type": "string"
+              }
+            }
+          }
+      },
+      "accounts": {
+        "type": "array",
+        "title": "Accounts",
+        "items": {
+            "properties": {
+              "institution_name": {
+                "title": "",
+                "type": "string"
+              },
+              "account_name": {
+                "title": "",
+                "type": "string"
+              },
+              "account_type": {
+                "title": "",
+                "type": "string"
+              },
+              "account_number": {
+                "title": "",
+                "type": "string"
+              },
+              "routing_number": {
+                "title": "",
+                "type": "string"
+              }
+            }
+          }
+      }
+
+    }
+  }

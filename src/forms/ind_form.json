@@ -1,0 +1,120 @@
+{
+    "type":"object",
+    "properties":{
+        "responses":{
+            "type": "array",
+            "title": "Accounts",
+            "items": {
+                "title":"",
+                "type":"object",
+                "properties": {
+                  "body": {
+                    "title": "",
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                          "title": "Title",
+                          "type": "string"
+                        },
+                        "first_name": {
+                            "title": "First Name",
+                            "type": "string"
+                        },
+                        "middle_name": {
+                            "title": "Middle Name",
+                            "type": "string"
+                        },
+                        "last_name": {
+                            "title": "Last Name",
+                            "type": "string"
+                        },
+                        "preferred_name": {
+                            "title": "Preferred Name",
+                            "type": "string"
+                        },
+                        "dob": {
+                            "title": "DOB",
+                            "type": "string"
+                        },
+                        "emails": {
+                            "title": "Emails",
+                            "type": "array",
+                            "items":{
+                                "type":"object",
+                                "properties":{
+                                    "data": {
+                                        "title": "",
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "type": "string"
+                                    }
+                                }
+                                
+                            }
+                        },
+                        "phone_numbers": {
+                            "title": "Phone Numbers",
+                            "type": "array",
+                            "items":{
+                                "type":"object",
+                                "properties":{
+                                    "data": {
+                                        "title": "",
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "title": "Type",
+                                        "type": "string"
+                                    }
+                                }
+                                
+                            }
+                        },
+                        "gender": {
+                            "title": "Gender",
+                            "type": "string"
+                        },
+                        "ethnicity": {
+                            "title": "Ethnicity",
+                            "type": "string"
+                        },
+                        "residence": {
+                            "type": "object",
+                            "title": "Residence",
+                            "properties": {
+                                "line1": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "line2": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "city": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "state": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "postal_code": {
+                                    "title": "",
+                                    "type": "string"
+                                    },
+                                "country": {
+                                    "title": "",
+                                    "type": "string"
+                                    }
+                            }
+                          }
+                    }
+                }
+              }
+          }
+        }
+    }
+
+}

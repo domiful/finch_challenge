@@ -6,10 +6,6 @@ const fsp = require('fs/promises');
 
 app.use(express.json());
 
-const getemployees = function(){
-
-}
-
 const getCompanyData =function(res){
     let data = {};
     let cData = {};
@@ -31,11 +27,12 @@ const getCompanyData =function(res){
             fetch("https://sandbox.tryfinch.com/api/employer/directory", {
                 method: "GET", // *GET, POST, PUT, DELETE, etc.
                 headers: {"Content-Type": "application/json",
-                            "Authorization": "Bearer "+data.access_token
+                        "Authorization": "Bearer "+data.access_token
                         },
             }).then(function(response){
                 return response.json();
             }).then(function(d){
+                console.log(d);
                 cData.dir = d;
 
                 res.send(JSON.stringify(cData));
@@ -61,12 +58,8 @@ const getCompanyData =function(res){
 }
 
 const storeKey = function(data){
-    fsp.writeFile(dataFile,JSON.stringify(data, null, 2)).then(function(response){
-        //console.log(response);
-      })
-      .catch(function(error) {
-      console.log(`write error: ${error.message}`);
-    });
+    return fsp.writeFile(dataFile,JSON.stringify(data, null, 2));
+    
 }
 
 app.post('/api/sandbox/create', (req, res) => {
@@ -80,9 +73,14 @@ app.post('/api/sandbox/create', (req, res) => {
         return response.json();
       }).then(function(d){
         
-        storeKey(d);
+        storeKey(d).then(function(response){
+            return response;
+          }).then(function(d){
+            getCompanyData(res);
+        }).catch(function(error) {
+            console.log(`Download error: ${error.message}`);
+          });
         
-        getCompanyData(res);
         
       })
       .catch(function(error) {
@@ -91,13 +89,11 @@ app.post('/api/sandbox/create', (req, res) => {
 });
 
 app.post('/api/employer/individual', (req, res) => {
-
     let data = {};
     let eData = {};
     fsp.readFile(dataFile,'utf8')
     .then(function (result) {
         data=JSON.parse(result);
-
         fetch("https://sandbox.tryfinch.com/api/employer/individual", {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {"Content-Type": "application/json",
@@ -121,6 +117,7 @@ app.post('/api/employer/individual', (req, res) => {
             }).then(function(response){
                 return response.json();
             }).then(function(d){
+                console.log(d);
                 eData.emp = d;
 
                 res.send(JSON.stringify(eData));

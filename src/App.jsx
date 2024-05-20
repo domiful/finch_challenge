@@ -1,9 +1,15 @@
 import React, {useState, useEffect} from 'react';
+import Form from '@rjsf/antd';
+import validator from '@rjsf/validator-ajv8';
 import { Button, Spin, Menu, Flex, Layout, Card, Table, Badge, Drawer, Space } from 'antd';
 const { Column } = Table;
-
-//import style from './style.module.css';
 const { Header, Sider, Content } = Layout;
+import compSchema from  './forms/company_form.json';
+import indSchema from  './forms/ind_form.json';
+import empSchema from  './forms/emp_form.json';
+
+
+
 
 const headerStyle = {
   textAlign: 'center',
@@ -69,7 +75,6 @@ const providers_list = [
 
 const App = () => {
 
-  const [loading, setLoading] = useState(true);
   const [compData, setCompData] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [compName, setCompName] = useState("");
@@ -81,7 +86,7 @@ const App = () => {
   };
   
   const onSelectProvider = (e) => {
-    console.log('click ', e);
+    //console.log('click ', e);
 
     fetch("/api/sandbox/create", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -94,12 +99,31 @@ const App = () => {
     }).then(function(response){
       return response.json();
     }).then(function(data){
-      //console.log(data.legal_name);
+      //console.log(data);
       updateForms(data);
     })
     .catch(function(error) {
       console.log(`Download error: ${error.message}`);
     });
+  }
+
+  const FormDataCheck = (p) =>{
+      const code = p.fData;
+      console.log(code);
+      if (typeof code == "undefined") {
+        return <h3></h3>
+      }else if (code.id) {
+        return <Form 
+            schema={compSchema}
+            formData={compData.comp}
+            validator={validator} 
+            uiSchema={{
+              "ui:submitButtonOptions": { norender: true },
+            }}
+          />;
+      }
+
+      return <h3>Endpoint Not Implemented</h3>;
   }
 
   const getEmployeeData = (eid) => {
@@ -114,7 +138,6 @@ const App = () => {
     }).then(function(data){
       console.log(data);
       setIndividual(data);
-      //updateForms(data);
     })
     .catch(function(error) {
       console.log(`Download error: ${error.message}`);
@@ -123,8 +146,8 @@ const App = () => {
 
   const updateForms = (data) =>{
     setCompData(data);
-    setCompName(compData.comp.legal_name);
-    setEmployees(compData.dir.individuals);
+    setCompName(data.comp.legal_name);
+    setEmployees(data.dir.individuals);
   }
   
   const openEmployeeDrawer = (id) => {
@@ -162,7 +185,8 @@ const App = () => {
                 width: '100%',
               }}
             >
-              {JSON.stringify(compData.comp,null,2)}
+              <FormDataCheck fData={compData.comp} />
+              
             </Card>
             <Card
               title="Directory"
@@ -233,9 +257,6 @@ const App = () => {
             extra={
               <Space>
                 <Button onClick={onClose}>Close</Button>
-                <Button type="primary" onClick={onClose}>
-                  OK
-                </Button>
               </Space>
             }
           >
@@ -245,49 +266,35 @@ const App = () => {
                 width: '100%',
               }}
             >
-              {JSON.stringify(individual.ind,null,2)}
+              <Form 
+                schema={indSchema}
+                formData={individual.ind}
+                validator={validator} 
+                uiSchema={{
+                  "ui:submitButtonOptions": { norender: true },
+                }}
+               />
             </Card>
             <Card
               title="Employment Data"
               style={{
                 width: '100%',
               }}
-            >
-              {JSON.stringify(individual.emp,null,2)}
+            > 
+              <Form 
+                schema={empSchema}
+                formData={individual.emp}
+                validator={validator} 
+                uiSchema={{
+                  "ui:submitButtonOptions": { norender: true },
+                }}
+               />
             </Card>
           </Drawer>
         </Layout>
-    </Layout>
+      </Layout>
     </div>
-);
-  /*if (loading) {
-    return (
-        <div className='App'>
-            <Spin />
-        </div>
     );
-} else
-    return (
-        <div className='App'>
-            <h1>Check Employee</h1>
-            <h3>Providers</h3>
-            <div className='container'>
-                {data.map((e) => (
-                    <div className='item' key={e.title}>
-                        <div>
-                            <b>Title: </b>
-                            {e.title}
-                        </div>
-                        <div>
-                            <b>Description: </b>
-                            {e.body}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-    */
 };
 
 export default App;
