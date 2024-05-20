@@ -14,24 +14,27 @@ import empSchema from  './forms/emp_form.json';
 
 
 const App = () => {
-
+  //company information and directory retuned from server
   const [compData, setCompData] = useState([]);
+  //list of empliyees returned from server
   const [employees, setEmployees] = useState([]);
+  //company name returned from server
   const [compName, setCompName] = useState("");
+  //employee drawer state
   const [drawerOpen, setDrawerOpen] = useState(false);
+  //individual employee data returned from server used in drawer
   const [individual, setIndividual] = useState([]);
+  //user generated number of employees for provider
   const [employeeCount, setEmployeeCount] = useState("10");
 
-  const onClose = () => {
-  };
-  
+  //contacts server when a provider is selected
+  //receives the company and directory data and updates app
   const onSelectProvider = (e) => {
     fetch("/api/sandbox/create", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
         "provider_id": e.key,
-        "products": ["company", "directory", "individual", "employment"],
         "employee_size": employeeCount
       }), // body data type must match "Content-Type" header
     }).then(function(response){
@@ -44,9 +47,10 @@ const App = () => {
     });
   }
 
+  //shows company information form if company data exists
+  //displays error when no endpoint is implemented, or nothing at app start
   const FormDataCheck = (p) =>{
       const code = p.fData;
-      console.log(code);
       if (typeof code == "undefined") {
         return <h3></h3>
       }else if (code.id) {
@@ -85,6 +89,7 @@ const App = () => {
       return <h3>Endpoint Not Implemented</h3>;
   }
 
+  //gets employee data from express server using employee id
   const getEmployeeData = (eid) => {
     fetch("/api/employer/individual", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -95,7 +100,6 @@ const App = () => {
     }).then(function(response){
       return response.json();
     }).then(function(data){
-      console.log(data);
       setIndividual(data);
     })
     .catch(function(error) {
@@ -103,12 +107,15 @@ const App = () => {
     });
   }
 
+  //sets the company data after company data has been returned
   const updateForms = (data) =>{
     setCompData(data);
     setCompName(data.comp.legal_name);
     setEmployees(data.dir.individuals);
   }
-  
+
+
+  //gets employee data and opens the employee drawer
   const openEmployeeDrawer = (id) => {
     getEmployeeData(id);
     setDrawerOpen(true);
@@ -215,7 +222,7 @@ const App = () => {
             title={'Employee'}
             placement="right"
             size={'large'}
-            onClose={onClose}
+            onClose={()=>{setDrawerOpen(false)}}
             open={drawerOpen}
             extra={
               <Space>

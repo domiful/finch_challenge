@@ -6,6 +6,8 @@ const fsp = require('fs/promises');
 
 app.use(express.json());
 
+
+//gets company data after provider sandbox is created
 const getCompanyData =function(res){
     let data = {};
     let cData = {};
@@ -57,18 +59,26 @@ const getCompanyData =function(res){
 
 }
 
+//stores access token to local storage
+//should be encrypted 
 const storeKey = function(data){
     return fsp.writeFile(dataFile,JSON.stringify(data, null, 2));
     
 }
 
+
+//creates the sandbox provider and stores the access token that is received
 app.post('/api/sandbox/create', (req, res) => {
     // get request values inside req.body
-
+    //console.log(req.body.provider_id);
     fetch("https://sandbox.tryfinch.com/api/sandbox/create", {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(req.body), // body data type must match "Content-Type" header
+        body: JSON.stringify({
+            "provider_id": req.body.provider_id,
+            "products": ["company", "directory", "individual", "employment"],
+            "employee_size": req.body.employee_size
+          }), // body data type must match "Content-Type" header
       }).then(function(response){
         return response.json();
       }).then(function(d){
@@ -88,6 +98,7 @@ app.post('/api/sandbox/create', (req, res) => {
     });
 });
 
+//returns the individual and employemt data for a user selected employee
 app.post('/api/employer/individual', (req, res) => {
     let data = {};
     let eData = {};
@@ -117,7 +128,6 @@ app.post('/api/employer/individual', (req, res) => {
             }).then(function(response){
                 return response.json();
             }).then(function(d){
-                console.log(d);
                 eData.emp = d;
 
                 res.send(JSON.stringify(eData));

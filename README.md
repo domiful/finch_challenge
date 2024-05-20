@@ -12,9 +12,11 @@ Node version 22
 # To use first install app and server
 
 `cd finch_challenge`— go into root of project
+
 `npm install`— This will install necessary node modules to run client
 
 `cd server` - go into server files inside of project
+
 `npm install ` - This will install necessary node modules to run client
 
 
