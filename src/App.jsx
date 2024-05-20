@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Form from '@rjsf/antd';
 import validator from '@rjsf/validator-ajv8';
-import { Button, Spin, Menu, Flex, Layout, Card, Table, Badge, Drawer, Space } from 'antd';
+import { Button, Spin, Menu, Flex, Layout, Card, Table, Badge, Drawer, Space, InputNumber } from 'antd';
 const { Column } = Table;
 const { Header, Sider, Content } = Layout;
 import compSchema from  './forms/company_form.json';
@@ -80,6 +80,7 @@ const App = () => {
   const [compName, setCompName] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [individual, setIndividual] = useState([]);
+  const [employeeCount, setEmployeeCount] = useState("");
 
   const onClose = () => {
     setDrawerOpen(false);
@@ -94,7 +95,7 @@ const App = () => {
       body: JSON.stringify({
         "provider_id": e.key,
         "products": ["company", "directory", "individual", "employment"],
-        "employee_size": 10
+        "employee_size": employeeCount
       }), // body data type must match "Content-Type" header
     }).then(function(response){
       return response.json();
@@ -183,6 +184,10 @@ const App = () => {
        
       <Layout style={layoutStyle}>
         <Sider width="20%" style={siderStyle}>
+          <Space direction='horizontal'>
+              Number of Employees
+          <InputNumber min={1} max={200} defaultValue={10} onChange={(e)=>{setEmployeeCount(e)}} />
+          </Space>
           <Menu
             onClick={onSelectProvider}
             defaultSelectedKeys={['1']}
