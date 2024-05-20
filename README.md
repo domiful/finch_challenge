@@ -1,56 +1,37 @@
-# Nano React App Default Javascript Template
+# Finch Challenge
+This is a react application with an express server that handles requests to the Finch API.
 
-The default template project for [nano-react-app](https://github.com/nano-react-app/nano-react-app).
+It is based on the default template project  [nano-react-app](https://github.com/nano-react-app/nano-react-app).
+I am using [ant design](https://github.com/ant-design/ant-design) for the theme.
+I am using [rjsf](https://rjsf-team.github.io/react-jsonschema-form/docs/) with an ant theme to populate the forms.
 
+# Requirements
+
+Node version 22
+
+# To use first install app and server
+
+`cd finch_challenge`— go into root of project
+`npm install`— This will install necessary node modules to run client
+
+`cd server` - go into server files inside of project
+`npm install ` - This will install necessary node modules to run client
+
+
+# To use application
+
+- `cd finch_challenge/server` -- go into server dir
+- `node index.js` — This will start the server with a default port of `5155`.
+
+
+In a new terminal window
+
+- `cd finch_challenge/` -- go into client dir
 - `npm start` — This will spawn a development server with a default port of `5173`.
-- `npm run build` — This will output a production build in the `dist` directory.
-- `npm run preview` — This will run the production build locally with a default port of `5173` (this will not work if you haven't generated the production build yet).
 
-## Custom port
-
-You can use the `-p` flag to specify a port for development. To do this, you can either run `npm start` with an additional flag:
-
-```
-npm start -- --port 3000
-```
-
-Or edit the `start` script directly:
-
-```
-vite --port 3000
-```
-
-## Adding styles
-
-You can use CSS files with simple ES2015 `import` statements anywhere in your Javascript:
-
-```js
-import "./index.css";
-```
-
-## Babel transforms
-
-The Babel preset [babel-preset-nano-react-app](https://github.com/nano-react-app/babel-preset-nano-react-app) is used to support the same transforms that Create React App supports.
-
-The Babel configuration lives inside `package.json` and will override an external `.babelrc` file, so if you want to use `.babelrc` remember to delete the `babel` property inside `package.json`.
+You can open the app at `localhost:5173`
 
 
-## Deploy to GitHub Pages
 
-You can also deploy your project using GitHub pages.
-First install the `gh-pages` [package](https://github.com/tschaub/gh-pages):
-
-`npm i -D gh-pages`
-
-Use the following scripts for deployment:
-
-```js
-"scripts": {
-  "start": "vite",
-  "build": "vite build",
-  "predeploy": "rm -rf dist && vite build",
-  "deploy": "gh-pages -d dist"
-},
-```
 
 Then follow the normal procedure in GitHub Pages and select the `gh-pages` branch.

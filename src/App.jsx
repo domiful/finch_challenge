@@ -119,6 +119,28 @@ const App = () => {
             validator={validator} 
             uiSchema={{
               "ui:submitButtonOptions": { norender: true },
+              'ui:style': { borderWidth: 0 },
+              "departments": {
+                "ui:options": {
+                  "addable": false,
+                  "orderable": false,
+                  "removable": false
+                }
+              },
+              "locations": {
+                "ui:options": {
+                  "addable": false,
+                  "orderable": false,
+                  "removable": false
+                }
+              },
+              "accounts": {
+                "ui:options": {
+                  "addable": false,
+                  "orderable": false,
+                  "removable": false
+                }
+              },
             }}
           />;
       }
@@ -272,6 +294,40 @@ const App = () => {
                 validator={validator} 
                 uiSchema={{
                   "ui:submitButtonOptions": { norender: true },
+                  "responses":{
+                    "ui:options": {
+                      "addable": false,
+                      "orderable": false,
+                      "removable": false
+                    },
+                    "items":{
+                      "body":{
+                        "phone_numbers": {
+                          "ui:options": {
+                            "addable": false,
+                            "orderable": false,
+                            "removable": false
+                          }
+                        },
+                        "emails": {
+                          "ui:options": {
+                            "addable": false,
+                            "orderable": false,
+                            "removable": false
+                          }
+                        },
+                        "accounts": {
+                          "ui:options": {
+                            "addable": false,
+                            "orderable": false,
+                            "removable": false
+                          }
+                        },
+                      }
+                        
+                    }
+                  }
+                  
                 }}
                />
             </Card>
@@ -287,6 +343,15 @@ const App = () => {
                 validator={validator} 
                 uiSchema={{
                   "ui:submitButtonOptions": { norender: true },
+                  "responses":{
+                    "ui:options": {
+                      "addable": false,
+                      "orderable": false,
+                      "removable": false
+                    },
+                    'ui:style': { borderWidth: 0 },
+
+                  }
                 }}
                />
             </Card>

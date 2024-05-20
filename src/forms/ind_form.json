@@ -3,7 +3,7 @@
     "properties":{
         "responses":{
             "type": "array",
-            "title": "Accounts",
+            "title": "",
             "items": {
                 "title":"",
                 "type":"object",
