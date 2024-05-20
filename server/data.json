@@ -1,9 +1,0 @@
-{
-  "payroll_provider_id": "gusto",
-  "company_id": "d95331fd-7565-4fd9-bdbf-7db040dcba90",
-  "access_token": "sandbox-token-6818989e-79d1-4476-aac3-bf158c95ec76",
-  "sandbox_time": {
-    "unix": 1716217505995,
-    "calendar": "Mon May 20 2024 15:05:05 GMT+0000"
-  }
-}
